@@ -15,8 +15,6 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=plastic)](https://github.com/schneiderpy/concstats/pulls)
 [![R
 badge](https://img.shields.io/badge/Build%20with-♥%20and%20R-blue)](https://github.com/schneiderpy/concstats)
-[![GitHub
-Stars](https://img.shields.io/github/stars/schneiderpy/concstats.svg?style=social)](https://github.com/schneiderpy/concstats)
 [![Codecov test
 coverage](https://codecov.io/gh/schneiderpy/concstats/branch/master/graph/badge.svg)](https://app.codecov.io/gh/schneiderpy/concstats?branch=master)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6456537.svg)](https://doi.org/10.5281/zenodo.6456537)
@@ -85,7 +83,7 @@ measure or a set of market structure and concentration measures:
 library(concstats)
 ## Create some simple data
 share1 <- c(0.4, 0.2, 0.25, 0.1, 0.05, 0, 0)
-share_hhi <- hhi(share1) # the Herfindahl-Hirschman Index
+share_hhi <- hhi(share1) # the Herfindahl-Hirschmann Index
 #> [1] 0.275
 
 share_dom <- dom(share1) # the Dominance Index

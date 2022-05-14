@@ -1,7 +1,7 @@
 Type: Package
 Package: concstats
 Title: Market Structure, Concentration and Inequality Measures
-Version: 0.1.0
+Version: 0.1.2
 Authors@R: 
     person(given = "Andreas",
            family = "Schneider",
@@ -45,8 +45,8 @@ LazyData: true
 RoxygenNote: 7.1.2
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2022-05-03 23:12:51 UTC; Acer
+Packaged: 2022-05-12 23:26:54 UTC; Acer
 Author: Andreas Schneider [aut, cre] (<https://orcid.org/0000-0001-5630-1097>)
 Maintainer: Andreas Schneider <schneiderconsultingpy@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-05-05 06:00:02 UTC
+Date/Publication: 2022-05-14 23:20:20 UTC
