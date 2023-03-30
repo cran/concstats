@@ -120,13 +120,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -338,27 +345,35 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h2><i class="far fa-lightbulb"></i> What is concstats?</h2>
 <p>concstats is a small package that helps you to <strong>calculate the
 structure, concentration or diversity measures of a given
-market.</strong> You can reach that goal in different ways:<br />
-a) calculating an individual measure, e.g. the Herfindahl Hirschmann
+market.</strong><br />
+You can reach that goal in different ways:<br />
+a) calculating an individual measure, e.g. the Herfindahl Hirschman
 Index (HHI) or its dual.<br />
 b) calculating a group of measures, e.g. structural measures, or<br />
-c) a selected set of measures in a one-step procedure.</p>
+c) a set of pre-selected measures in a one-step procedure.</p>
 </div>
 <div id="how-can-you-install-it" class="section level2">
 <h2><i class="fas fa-download"></i> How can you install it?</h2>
-<p>To install the latest development version of <code>concstats</code>
-directly from <a href="https://github.com/schneiderpy/concstats">GitHub</a> or use:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;schneiderpy/concstats&quot;</span>)</span></code></pre></div>
+<p>You can install <code>concstats</code> directly from CRAN</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;concstats&quot;</span>) <span class="co"># Market Structure, Concentration, and Inequality</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                              <span class="co"># Measures</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(concstats)</span></code></pre></div>
+<p>You can install the development versions from</p>
+<p><em>r-universe</em><br />
+install.packages(“concstats”, repos = “<a href="https://ropensci.r-universe.dev" class="uri">https://ropensci.r-universe.dev</a>”)</p>
+<p><em>github</em> (requires <code>remotes</code> or
+<code>devtools</code>)<br />
+remotes::install_github(“ropensci/concstats”</p>
 </div>
 <div id="why-did-i-build-it" class="section level1">
 <h1></a><i class="fas fa-table"></i> Why did I build it?</h1>
 <p>Measures of concentration and competition are important and give a
-first insight of a given market structure in a particular market.
+first insight of a given market structure in a particular market.<br />
 <strong>They are important to determine public policies and strategic
 corporate decisions</strong>. However, in research and in practice the
 most commonly used measure is the Herfindahl Hirschman Index. The
-<code>concstats</code> package offers a set of alternative measures.</p>
+<code>concstats</code> package offers a <strong>set of alternative
+measures</strong>.</p>
 <p><code>concstats</code> allows you to <strong>calculate quickly a
 particular measure or a group of measures to give you a better overview
 of a given market situation and therefore reducing uncertainty.</strong>
@@ -367,34 +382,41 @@ alike.</strong></p>
 <div id="how-can-it-be-used" class="section level2">
 <h2><i class="fas fa-code"></i> How can it be used?</h2>
 <p><code>concstats</code> should be used by practitioners and academics
-<strong>who are concerned about a given market situation regarding its
-structure, concentration, diversity or inequality</strong>. <strong>A
-single standard measure like the Herfindahl Hirschmann Index (HHI) may
-lead to erroneous conclusions.</strong> The <code>concstats</code>
-package offers a <strong>straightforward way to calculate standard and
+<strong>who are concerned about structure, concentration, diversity or
+inequality</strong> in general or on a regular basis. <strong>A single
+standard measure like the Herfindahl Hirschman Index (HHI) may lead to
+erroneous conclusions.</strong> The <code>concstats</code> package
+offers a <strong>straightforward way to calculate standard and
 alternative measures</strong> given a data set of market participants
-and their participation (in absolute or relative values) in a particular
-market at a given point of time or over time. concstats provides
-currently the following basic functions:</p>
+and their participation (in relative values) in a particular market at a
+given point of time or over time. concstats provides currently the
+following basic functions:</p>
 <ul>
-<li><strong>concstats</strong> calculates eight pre-selected measures in
-a one-step procedure to provide a first insight of the market.</li>
-<li><strong>mstruct</strong> is a wrapper for the following measures:
-<strong>firm</strong>, <strong>nrs_eq</strong> (Numbers equivalent),
-<strong>top</strong>, <strong>top 3</strong> and <strong>top 5</strong>
-market share, and <strong>all</strong> calculates all measures as a
-group.</li>
-<li><strong>comp</strong> is a group wrapper for the following
-concentration measures: <strong>hhi</strong>, the <strong>dual of the
-hhi</strong>, the <strong>min. of the hhi</strong>, the
-<strong>dominance index</strong>, the <strong>stenbacka index</strong>,
-and finally <strong>all</strong> which calculates all measures as a
-group.</li>
-<li><strong>inequ</strong> is a wrapper for inequality and diversity
-measures and contains: <strong>entropy</strong>, <strong>gini
-coefficient</strong>, <strong>simpson index</strong>, the <strong>palma
-ratio</strong> and the alternative <strong>grs</strong> measure,
-<strong>all</strong> calculates the group measures.</li>
+<li><strong><code>concstats_concstats()</code></strong> calculates eight
+pre-selected measures in a one-step procedure to provide a first insight
+of the market. The resulting data frame contains eight measures, which
+are: number of firms with market share, numbers equivalent, the
+cumulative share of the top (top 3 and top 5) firm(s) in percentage, the
+hhi index, the entropy index, and the palma ratio.</li>
+<li><strong><code>concstats_mstruct()</code></strong> is a wrapper for
+the following measures: <strong>firm</strong>, <strong>nrs_eq</strong>
+(Numbers equivalent), <strong>top</strong>, <strong>top 3</strong> and
+<strong>top 5</strong> market share, and <strong>all</strong> calculates
+all measures as a group. Each of the measures within a group can be
+accessed directly using the prefix <strong>concstats_</strong>, e.g.
+<strong>concstats_firm</strong>.</li>
+<li><strong><code>concstats_comp()</code></strong> is a group wrapper
+for the following concentration measures: <strong>hhi</strong>, the
+<strong>dual of the hhi</strong>, the <strong>min. of the hhi</strong>,
+the <strong>dominance index</strong>, the <strong>stenbacka
+index</strong>, and finally <strong>all</strong> which calculates all
+measures as a group.</li>
+<li><strong><code>concstats_inequ()</code></strong> is a wrapper for
+inequality and diversity measures and contains:
+<strong>entropy</strong>, <strong>gini coefficient</strong>,
+<strong>simpson index</strong>, the <strong>palma ratio</strong> and the
+alternative <strong>grs</strong> measure, <strong>all</strong>
+calculates the group measures.</li>
 </ul>
 </div>
 </div>
