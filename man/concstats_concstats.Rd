@@ -16,10 +16,11 @@ vector contains \code{NA} values.}
 
 \item{digits}{A non-null value for digits specifies the minimum number of
 significant digits to be printed in values. The default is \code{NULL} and
-will use base R print option. Significant digits defaults to 7.}
+will use base R print option.}
 }
 \value{
-A \verb{data frame} of numeric measures with default settings.
+A \verb{data frame} of numeric measures with default settings from
+the respective individual measure.
 }
 \description{
 A convenience function which calculates a selected set of
@@ -38,7 +39,8 @@ in groups.
 }
 \note{
 The vector of market shares should be in a decimal form corresponding
-to the total share of individual firms/units. The vector should sum up to 1.
+to the total share of individual firms/units. The vector should sum up to 1,
+otherwise a numeric vector will be converted into decimal form.
 }
 \examples{
 # a vector of market shares

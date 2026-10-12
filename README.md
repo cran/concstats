@@ -9,9 +9,9 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/ropensci/concstats/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/concstats/actions)
+[![R-CMD-check](https://github.com/ropensci/concstats/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/concstats/actions/workflows/R-CMD-check.yaml)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/concstats)](https://cran.r-project.org/package=concstats)
-[![runiverse](https://ropensci.r-universe.dev/badges/concstats)](http://ropensci.r-universe.dev/ui/#package:concstats)
+[![runiverse](https://ropensci.r-universe.dev/badges/concstats)](https://ropensci.r-universe.dev/concstats)
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -19,7 +19,6 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![R
 badge](https://img.shields.io/badge/Build%20with-♥%20and%20R-blue)](https://github.com/ropensci/concstats)
 [![codecov](https://codecov.io/gh/ropensci/concstats/branch/master/graph/badge.svg?token=IG5NPEGK6J)](https://app.codecov.io/gh/ropensci/concstats)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6456536.svg)](https://doi.org/10.5281/zenodo.6456536)
 [![metacran
 downloads](https://cranlogs.r-pkg.org/badges/concstats)](https://cran.r-project.org/package=concstats)
 [![CRAN RStudio mirror
@@ -27,6 +26,7 @@ downloads](https://cranlogs.r-pkg.org/badges/grand-total/concstats?color=blue)](
 [![pkgcheck](https://github.com/ropensci/concstats/workflows/pkgcheck/badge.svg)](https://github.com/ropensci/concstats/actions?query=workflow%3Apkgcheck)
 [![Status at rOpenSci Software Peer
 Review](https://badges.ropensci.org/559_status.svg)](https://github.com/ropensci/software-review/issues/559)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.05885/status.svg)](https://doi.org/10.21105/joss.05885)
 <!-- badges: end -->
 
 Measures of concentration and competition are important and give a first
@@ -45,13 +45,15 @@ market situation. Various functions or groups of functions are available
 to achieve the desired goal.
 
 \-`concstats_concstats` calculates a set of pre-selected concentration
-and diversity measures in a one-step procedure.  
+and diversity measures in a one-step procedure.\
 -`concstats_mstruct` offers market structure measures, e.g. the sum of
-Top3 or Top5 market shares.  
+Top3 or Top5 market shares.\
 -`concstats_comp` is a wrapper for concentration measures, e.g. the
-Herfindahl Hirschman Index.  
+Herfindahl Hirschman Index.\
 -`concstats_inequ` offers diversity or inequality measures, e.g. the
-Entropy or the Palma ratio.
+Entropy or the Palma ratio.\
+-`concstats_shares` is a helper function converting numeric vectors into
+individual shares.
 
 ## Installation
 
@@ -64,7 +66,7 @@ install.packages("concstats") # Market structure, concentration and inequality
 
 You can install the latest development version from
 [GitHub](https://github.com/ropensci/concstats) or
-[R-universe](http://ropensci.r-universe.dev/ui/#package:concstats).
+[R-universe](https://ropensci.r-universe.dev/concstats/).
 
 ``` r
 # install.packages("devtools")
@@ -72,24 +74,27 @@ devtools::install_github("ropensci/concstats")
 ```
 
 ``` r
-install.packages("concstats", repos = "https://ropensci.r-universe.dev")
+install.packages("concstats", repos = "https://ropensci.r-universe.dev/concstats/")
 ```
 
 ## How to use `concstats`
 
 ### `concstats_concstats`
 
-In general, `concstats` takes numeric vectors as input, that is,
-relative market shares in decimal format. `concstats_constats` has one
-main function which calculates a set of pre-selected measures in a
-one-step procedure.
+In general, all functions of the `concstats` package take numeric
+vectors as input, that is, ideally relative market shares in decimal
+format. However, the user can also use integers which are then converted
+to decimal form. `concstats_constats` has one main function which
+calculates a set of pre-selected measures in a one-step procedure.
 
 ### `concstats_mstruct`
 
 is a wrapper to calculate different structural measures. Within this
 group are measures like the number of firms, numbers equivalent,
 cumulative Top 3 and Top 5 market share. The measures might be
-calculated as a group or individually.
+calculated as a group or individually. The `concstats_top_df` functions
+also take a data frame as input, since the ranking of firms might be of
+interest.
 
 ### `concstats_comp`
 
@@ -115,6 +120,11 @@ x <- c(0.4, 0.2, 0.25, 0.1, 0.05, 0, 0)
 concstats_hhi(x) # the Herfindahl-Hirschman Index
 #> [1] 0.275
 
+## if you need to convert your data into shares
+x <- c(538572286.08, 481096.77, 161914143.03, 128796268.59, 69055940.72)
+concstats_shares(x, digits = 5)
+#> [1] 0.59920 0.00054 0.18014 0.14329 0.07683
+
 concstats_dom(x) # the Dominance Index
 #> [1] 0.4127273
 
@@ -123,7 +133,7 @@ x2 <- c(0.35, 0.4, 0.05, 0.1, 0.06, 0.04) # market shares of each firm in
                                           # the market (should sum up to 1)
 
 ## Calculate a selected set of market structure and concentration measures
-concstats_concstats(x2, digits = 2) # calculates a selected set of measures
+concstats_concstats(x2, digits = 2) # calculates a pre-selected set of measures
 #>         Measures Values
 #> 1          Firms   6.00
 #> 2 Nrs_equivalent   3.33
@@ -149,19 +159,19 @@ Some functions are already implemented in other R packages. The
 non-exhaustive summary below is by no means a description of each
 package.
 
--   The Herfindahl Hirschman Index can be found in the
-    [hhi](https://joss.theoj.org/papers/10.21105/joss.00828) and the
-    [divseg](https://github.com/christopherkenny/divseg) packages. While
-    the *hhi* package has just one function, neither of both packages
-    offer a normalized version of the measure.
+- The Herfindahl Hirschman Index can be found in the
+  [hhi](https://joss.theoj.org/papers/10.21105/joss.00828) and the
+  [divseg](https://github.com/christopherkenny/divseg) packages. While
+  the *hhi* package has just one function, neither of both packages
+  offer a normalized version of the measure.
 
--   The latter offers as well functions for the Entropy, Gini and
-    Simpson measures.
+- The latter offers as well functions for the Entropy, Gini and Simpson
+  measures.
 
--   The [acid](https://cran.r-project.org/package=acid) and the
-    [ineq](https://cran.r-project.org/package=ineq) packages offer
-    functions for inequality and competition measures, e.g. for the
-    Entropy and Gini metric.
+- The [acid](https://cran.r-project.org/package=acid) and the
+  [ineq](https://cran.r-project.org/package=ineq) packages offer
+  functions for inequality and competition measures, e.g. for the
+  Entropy and Gini metric.
 
 Some popular measures, e.g. Gini or the Herfindahl-Hirschman index have
 also been implemented in Python.
@@ -199,9 +209,6 @@ Index.
 ## Credits
 
 The hexagon sticker is created by myself with the `hexsticker` package.
-A good overview and a lot of inspiration (adding badges, how to create a
-webpage and testing the package) comes from [Cosima Meyer and Dennis
-Hammerschmidt](https://www.mzes.uni-mannheim.de/socialsciencedatalab/article/r-package/).
 
 ## Contact and Issues
 

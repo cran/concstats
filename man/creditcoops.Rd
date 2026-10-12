@@ -16,18 +16,18 @@ cooperative}
 }
 }
 \source{
-\url{http://www.incoop.gov.py/v2/}
+\url{https://www.incoop.gov.py}
 }
 \usage{
-creditcoops
+data(creditcoops)
 }
 \description{
 data set with 22 paired Paraguayan credit cooperatives
 (2016, 2018)
 }
 \note{
-real names of the cooperatives have been purposely omitted, but are
-available on request.
+real names of the cooperatives have been purposely omitted, but
+are available on request.
 }
 \examples{
 data("creditcoops")

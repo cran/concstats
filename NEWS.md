@@ -1,19 +1,36 @@
+# concstats 0.2.1
+
+- added three more functions (concstats_top_df, concstats_top3_df,
+  concstats_top5_df)
+- added a helper function to calculate shares if input are raw data and not
+  transformed to shares
+- all functions have a separate R script
+- all functions have now their own test file
+- corrected Simpson measure #3 (thanks to @marberts)
+- improved input behavior for integer vectors representing shares
+- functions error on any negative value
+- revisited and updated documentation and vignettes
+- added a new rhub.yaml for the new R-hub v2 using a) rhub::rhub_setup(),
+  rhub::rhub_doctor() to check if the setup was correct, and finally
+  rhub::rhub_check() to check the package
+
+
 # concstats 0.1.6
 
--   changed to version 0.1.6
--   unified variable declaration (all x, instead of shares)
--   corrected the implementation of the GRS formula
--   enhanced examples, added references to functions, each function has now its own documentation
--   updated vignette "Introduction to concstats", and added code for the plot "Credit cooperatives"
--   link from README to CONTRIBUTING.md
--   using fs() for direct links in documentation
--   corrected function names
--   `unbiased` changed to `normalized`; implemented messages and tests
--   computation yields `NA` just if `NAs` are present (changed documentation)
--   removed dependencies (readr and dplyr)
--   added argument `digits` for some functions to enable user control of the printed number of digits
--   reviewed, changed or added tests for several functions
--   changed data-raw/creditcoops.R, on line 3 n() to dplyr::n()
+- changed to version 0.1.6
+- unified variable declaration (all x, instead of shares)
+- corrected the implementation of the GRS formula
+- enhanced examples, added references to functions, each function has now its own documentation
+- updated vignette "Introduction to concstats", and added code for the plot "Credit cooperatives"
+- link from README to CONTRIBUTING.md
+- using fs() for direct links in documentation
+- corrected function names
+- `unbiased` changed to `normalized`; implemented messages and tests
+- computation yields `NA` just if `NAs` are present (changed documentation)
+- removed dependencies (readr and dplyr)
+- added argument `digits` for some functions to enable user control of the printed number of digits
+- reviewed, changed or added tests for several functions
+- changed data-raw/creditcoops.R, on line 3 n() to dplyr::n()
 
 
 # concstats 0.1.4
